@@ -1,7 +1,6 @@
-# BaseService
+# TeamService
 
-[![.github/workflows/pipeline.yml](https://github.com/CyberpunkTeam/UserService/actions/workflows/pipeline.yml/badge.svg)](https://github.com/CyberpunkTeam/UserService/actions/workflows/pipeline.yml)
-[![Coverage Status](https://coveralls.io/repos/github/CyberpunkTeam/UserService/badge.svg?branch=master)](https://coveralls.io/github/CyberpunkTeam/UserService?branch=master)
+[![.github/workflows/pipeline.yml](https://github.com/CyberpunkTeam/TeamsService/actions/workflows/pipeline.yml/badge.svg)](https://github.com/CyberpunkTeam/TeamsService/actions/workflows/pipeline.yml)
 
 
 ## Setup
@@ -16,7 +15,7 @@
 
 ### Pycharm:
 1. Add poetry plugin
-2. Add interpreter using poetry plugin
+2. Add an interpreter using poetry plugin
 
 
 ## Run API
