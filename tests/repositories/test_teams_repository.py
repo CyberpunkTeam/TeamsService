@@ -16,6 +16,7 @@ def test_save_teams():
         tid="4211",
         technologies=["Python", "React"],
         project_preferences=["web", "AI", "Crypto"],
+        owner="1234",
     )
 
     ok = repository.insert(team)
@@ -34,6 +35,7 @@ def test_get_team():
         tid="4211",
         technologies=["Python", "React"],
         project_preferences=["web", "AI", "Crypto"],
+        owner="1234",
     )
 
     ok = repository.insert(team)
@@ -50,3 +52,4 @@ def test_get_team():
     assert team_found.tid == "4211"
     assert team_found.technologies == ["Python", "React"]
     assert team_found.project_preferences == ["web", "AI", "Crypto"]
+    assert team_found.owner == "1234"

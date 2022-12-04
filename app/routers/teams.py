@@ -19,8 +19,8 @@ async def create_team(team: Teams):
 
 
 @router.get("/teams/", tags=["teams"], response_model=List[Teams])
-async def list_team():
-    return TeamsController.get(teams_repository)
+async def list_team(owner_uid: str = None):
+    return TeamsController.get(teams_repository, uid=owner_uid)
 
 
 @router.get("/teams/{tid}", tags=["teams"], response_model=Teams)
