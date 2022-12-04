@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "users"
+name = "teams"
 version = "0.1.0"
 description = ""
 authors = ["matfonseca <mfonseca@fi.uba.ar>"]
@@ -11,6 +11,7 @@ uvicorn = "^0.19.0"
 pydantic = "^1.10.2"
 httpx = "^0.23.1"
 cpunk-mongo = "^0.2.0"
+uuid = "^1.30"
 
 
 [tool.poetry.dev-dependencies]

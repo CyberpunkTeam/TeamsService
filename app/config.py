@@ -10,4 +10,3 @@ if DATABASE_USER is not None and DATABASE_PASSWORD is not None:
 
 
 DATABASE_NAME = os.environ.get("DATABASE_NAME", "test")
-USER_COLLECTION = "users"
