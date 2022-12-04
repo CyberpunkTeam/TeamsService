@@ -12,8 +12,8 @@ class TeamsController:
         return team
 
     @staticmethod
-    def get(repository, tid=None, top=False):
-        result = repository.get(tid)
+    def get(repository, tid=None, uid=None, top=False):
+        result = repository.get(tid=tid, uid=uid)
         if len(result) == 0 and tid is not None:
             raise HTTPException(status_code=404, detail="Item not found")
 

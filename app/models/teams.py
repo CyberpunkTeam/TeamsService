@@ -10,6 +10,7 @@ class Teams(BaseModel):
     name: str
     technologies: List[str]
     project_preferences: List[str]
+    owner: str
 
     def to_json(self):
         return loads(self.json(exclude_defaults=True))
@@ -21,6 +22,7 @@ class Teams(BaseModel):
             "tid": str,
             "technologies": list,
             "project_preferences": list,
+            "owner": str,
         }
 
     @staticmethod

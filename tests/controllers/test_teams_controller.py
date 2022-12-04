@@ -15,12 +15,14 @@ def test_get_all_teams():
             tid="1234",
             technologies=["Python", "React"],
             project_preferences=["web", "AI", "Crypto"],
+            owner="1234",
         ),
         Teams(
             name="VitalikArmy",
             tid="3333",
             technologies=["Python", "TS"],
             project_preferences=["web3", "Crypto"],
+            owner="1234",
         ),
     ]
     result = TeamsController.get(repository)
@@ -35,12 +37,14 @@ def test_get_top_team():
             tid="4211",
             technologies=["Python", "React"],
             project_preferences=["web", "AI", "Crypto"],
+            owner="1234",
         ),
         Teams(
             name="VitalikArmy",
             tid="4313",
             technologies=["Python", "TS"],
             project_preferences=["web3", "Crypto"],
+            owner="1234",
         ),
     ]
     result = TeamsController.get(repository, top=True)
@@ -55,6 +59,7 @@ def test_get_team():
             tid="4211",
             technologies=["Python", "React"],
             project_preferences=["web", "AI", "Crypto"],
+            owner="1234",
         )
     ]
     result = TeamsController.get(repository, tid="4211", top=True)
@@ -75,6 +80,7 @@ def test_create_team():
         name="GreenTeam",
         technologies=["Python", "React"],
         project_preferences=["web", "AI", "Crypto"],
+        owner="1234",
     )
 
     result = TeamsController.post(repository, team)
@@ -89,6 +95,7 @@ def test_error_create_team():
         name="GreenTeam",
         technologies=["Python", "React"],
         project_preferences=["web", "AI", "Crypto"],
+        owner="1234",
     )
     with pytest.raises(HTTPException):
         TeamsController.post(repository, team)

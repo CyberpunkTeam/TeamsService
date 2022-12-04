@@ -27,6 +27,7 @@ def step_impl(context, name, technologies, project_preferences):
         "name": name,
         "technologies": technologies_list,
         "project_preferences": project_preferences_list,
+        "owner": "1234",
     }
 
 
@@ -68,6 +69,7 @@ def step_impl(context, field_name):
         "name": "GreenTeam",
         "technologies": ["Python", "JS"],
         "project_preferences": ["Web", "AI"],
+        "owner": "1234",
     }
     del team_to_save[field_spanish_to_english[field_name]]
     context.vars["team_to_save"] = team_to_save

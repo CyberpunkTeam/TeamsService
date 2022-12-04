@@ -7,6 +7,7 @@ def test_create_team():
         tid="4211",
         technologies=["Python", "React"],
         project_preferences=["web", "AI", "Crypto"],
+        owner="1234",
     )
     assert team.name == "GreenTeam"
     assert team.tid == "4211"
