@@ -92,3 +92,89 @@ def step_impl(context, field_name):
     missing_fields = json_body["detail"][0]["loc"]
     assert field_spanish_to_english[field_name] in missing_fields
     assert msg == "field required"
+
+
+@step('ya existe un equipo con nombre "{name}"')
+def step_impl(context, name):
+    """
+    :param name:
+    :type context: behave.runner.Context
+    """
+    team_to_save = {
+        "name": name,
+        "technologies": ["Python", "JS"],
+        "project_preferences": ["Web", "AI"],
+        "owner": "1234",
+    }
+
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+
+    url = "/teams"
+
+    response = context.client.post(url, json=team_to_save, headers=headers)
+
+    assert response.status_code == 201
+    context.vars["tid"] = response.json()["tid"]
+
+
+@then("se me informa que ya existe un equipo con ese nombre")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    assert context.response.status_code == 400
+    assert context.response.json()["detail"] == "Team name is not available"
+
+
+@given("que quiero agregar a un miembro a un equipo")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    context.vars["new_member_uid"] = "456667787"
+
+
+@when('agrego a un miembro a el equipo con nombre "{name}"')
+def step_impl(context, name):
+    """
+    :param name:
+    :type context: behave.runner.Context
+    """
+    url = "/teams/" + context.vars["tid"]
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+
+    response = context.client.get(url, headers=headers)
+
+    team = response.json()
+    context.vars["members_amount"] = len(team["members"])
+
+    url = "/teams/" + context.vars["tid"] + "/members/" + context.vars["new_member_uid"]
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+
+    context.response = context.client.post(url, headers=headers)
+
+
+@then("se me informa que se agrego correctamente")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    assert context.response.status_code == 201
+
+
+@step("el equipo tiene un miembro mas")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    url = "/teams/" + context.vars["tid"]
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+
+    response = context.client.get(url, headers=headers)
+
+    team = response.json()
+    assert len(team["members"]) == context.vars["members_amount"] + 1

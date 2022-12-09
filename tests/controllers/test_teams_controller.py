@@ -1,10 +1,12 @@
 from unittest.mock import Mock
 
+import mongomock
 import pytest
 from fastapi import HTTPException
 
 from app.controllers.teams_controller import TeamsController
 from app.models.teams import Teams
+from app.repositories.teams_repository import TeamsRepository
 
 
 def test_get_all_teams():
@@ -75,6 +77,7 @@ def test_error_team_not_found():
 
 def test_create_team():
     repository = Mock()
+    repository.exists.return_value = False
     repository.insert.return_value = True
     team = Teams(
         name="GreenTeam",
@@ -90,6 +93,7 @@ def test_create_team():
 
 def test_error_create_team():
     repository = Mock()
+    repository.exists.return_value = False
     repository.insert.return_value = False
     team = Teams(
         name="GreenTeam",
@@ -99,3 +103,36 @@ def test_error_create_team():
     )
     with pytest.raises(HTTPException):
         TeamsController.post(repository, team)
+
+
+def test_error_team_name_exists():
+    repository = Mock()
+    repository.exists.return_value = True
+    team = Teams(
+        name="GreenTeam",
+        technologies=["Python", "React"],
+        project_preferences=["web", "AI", "Crypto"],
+        owner="1234",
+    )
+    with pytest.raises(HTTPException):
+        TeamsController.post(repository, team)
+
+
+@mongomock.patch(servers=(("server.example.com", 27017),))
+def test_add_member_to_team():
+    team = Teams(
+        name="GreenTeam",
+        technologies=["Python", "React"],
+        project_preferences=["web", "AI", "Crypto"],
+        owner="1234",
+    )
+    repository = TeamsRepository("server.example.com", "test")
+    result = TeamsController.post(repository, team)
+
+    assert len(result.members) == 1
+
+    new_member = "12355"
+    TeamsController.add_member(repository, result.tid, new_member)
+
+    team_returned = TeamsController.get(repository, result.tid, top=True)
+    assert len(team_returned.members) == 2
