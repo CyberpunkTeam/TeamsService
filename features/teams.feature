@@ -27,3 +27,25 @@ Feature: CRUD Team
     And confirmo el alta de equipo
 
     Then se me informa el campo "preferencias de proyecto" es obligatorio
+
+  Scenario: Creacion de equipo con nombre ya existente
+    Given que quiero crear un equipo
+
+    And ya existe un equipo con nombre "DevArmy"
+
+    When completo el formulario de alta de equipo con nombre "DevArmy" , tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+
+    And confirmo el alta de equipo
+
+    Then se me informa que ya existe un equipo con ese nombre
+
+  Scenario: Agregar miembro a equipo
+    Given que quiero agregar a un miembro a un equipo
+
+    And ya existe un equipo con nombre "DevArmy"
+
+    When agrego a un miembro a el equipo con nombre "DevArmy"
+
+    Then se me informa que se agrego correctamente
+
+    And el equipo tiene un miembro mas

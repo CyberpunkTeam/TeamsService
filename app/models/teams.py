@@ -11,6 +11,7 @@ class Teams(BaseModel):
     technologies: List[str]
     project_preferences: List[str]
     owner: str
+    members: Optional[List[str]] = []
 
     def to_json(self):
         return loads(self.json(exclude_defaults=True))
@@ -23,10 +24,10 @@ class Teams(BaseModel):
             "technologies": list,
             "project_preferences": list,
             "owner": str,
+            "members": list,
         }
 
     @staticmethod
     def get_tid():
-
         myuuid = uuid.uuid4()
         return str(myuuid)
