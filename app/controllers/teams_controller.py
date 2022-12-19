@@ -52,7 +52,8 @@ class TeamsController:
         TeamsController.exists(repository, tid)
         team.tid = tid
         if repository.put(team):
-            return {"message": "Team updated"}
+            result = repository.get(tid=tid)
+            return result[0]
         else:
             raise HTTPException(status_code=500, detail="Error to update team")
 
