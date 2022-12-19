@@ -1,5 +1,6 @@
 from cpunk_mongo.db import DataBase
 
+from app.models.requests.team_update import TeamUpdate
 from app.models.teams import Teams
 
 
@@ -47,3 +48,6 @@ class TeamsRepository(DataBase):
 
     def reset(self):
         return self.delete_all(self.COLLECTION_NAME)
+
+    def put(self, team: TeamUpdate):
+        return self.update(self.COLLECTION_NAME, "tid", team.tid, team)

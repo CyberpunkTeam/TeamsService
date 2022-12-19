@@ -49,3 +49,12 @@ Feature: CRUD Team
     Then se me informa que se agrego correctamente
 
     And el equipo tiene un miembro mas
+
+  Scenario: Actualizar equipo
+    Given ya existe un equipo con nombre "DevArmy", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+
+    When cuando actualizo el equipo a nombre "DevArmy 2", tecnologias "Java" y preferencia de proyectos de tipo "Web".
+
+    Then se me informa que se actualizo correctamente
+
+    And puedo ver que el equipo se actualizo a nombre "DevArmy 2", tecnologias "Java" y preferencia de proyectos de tipo "Web".
