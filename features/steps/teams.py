@@ -178,3 +178,96 @@ def step_impl(context):
 
     team = response.json()
     assert len(team["members"]) == context.vars["members_amount"] + 1
+
+
+@given(
+    'ya existe un equipo con nombre "{name}", tecnologias "{technologies}" y preferencia de proyectos de tipo "{project_preferences}".'
+)
+def step_impl(context, name, technologies, project_preferences):
+    """
+    :param name: str
+    :param technologies: str
+    :param project_preferences:str
+    :type context: behave.runner.Context
+    """
+    technologies_list = technologies.split(",")
+    project_preferences_list = project_preferences.split(",")
+    team_to_save = {
+        "name": name,
+        "technologies": technologies_list,
+        "project_preferences": project_preferences_list,
+        "owner": "1234",
+    }
+    context.vars["owner"] = "1234"
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+
+    url = "/teams"
+
+    response = context.client.post(url, json=team_to_save, headers=headers)
+
+    assert response.status_code == 201
+    context.vars["tid"] = response.json()["tid"]
+
+
+@when(
+    'cuando actualizo el equipo a nombre "{name}", tecnologias "{technologies}" y preferencia de proyectos de tipo "{project_preferences}".'
+)
+def step_impl(context, name, technologies, project_preferences):
+    """
+    :param name: str
+    :param technologies: str
+    :param project_preferences:str
+    :type context: behave.runner.Context
+    """
+    technologies_list = technologies.split(",")
+    project_preferences_list = project_preferences.split(",")
+    team_to_update = {
+        "name": name,
+        "technologies": technologies_list,
+        "project_preferences": project_preferences_list,
+    }
+    context.vars["team_to_update"] = team_to_update
+
+
+@then("se me informa que se actualizo correctamente")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+
+    url = "/teams/" + context.vars["tid"]
+
+    response = context.client.put(
+        url, json=context.vars["team_to_update"], headers=headers
+    )
+
+    assert response.status_code == 200
+
+
+@step(
+    'puedo ver que el equipo se actualizo a nombre "{name}", tecnologias "{technologies}" y preferencia de proyectos de tipo "{project_preferences}".'
+)
+def step_impl(context, name, technologies, project_preferences):
+    """
+    :param name: str
+    :param technologies: str
+    :param project_preferences:str
+    :type context: behave.runner.Context
+    """
+    url = "/teams/" + context.vars["tid"]
+    technologies_list = technologies.split(",")
+    project_preferences_list = project_preferences.split(",")
+    response = context.client.get(url)
+
+    assert response.status_code == 200
+
+    team_updated = response.json()
+
+    assert team_updated.get("name") == name
+    assert team_updated.get("technologies") == technologies_list
+    assert team_updated.get("project_preferences") == project_preferences_list
+    assert team_updated.get("tid") == context.vars["tid"]
+    assert team_updated.get("owner") == context.vars["owner"]

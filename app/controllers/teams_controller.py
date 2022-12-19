@@ -1,4 +1,6 @@
 from fastapi import HTTPException
+
+from app.models.requests.team_update import TeamUpdate
 from app.models.teams import Teams
 
 
@@ -18,7 +20,7 @@ class TeamsController:
     def get(repository, tid=None, uid=None, top=False):
         result = repository.get(tid=tid, uid=uid)
         if len(result) == 0 and tid is not None:
-            raise HTTPException(status_code=404, detail="Item not found")
+            raise HTTPException(status_code=404, detail="Team not found")
 
         if top:
             return result[0]
@@ -44,3 +46,18 @@ class TeamsController:
         team.members.append(new_member)
 
         return TeamsController.update(repository, team)
+
+    @staticmethod
+    def put(repository, tid, team: TeamUpdate):
+        TeamsController.exists(repository, tid)
+        team.tid = tid
+        if repository.put(team):
+            return {"message": "Team updated"}
+        else:
+            raise HTTPException(status_code=500, detail="Error to update team")
+
+    @staticmethod
+    def exists(repository, tid):
+        result = repository.get(tid=tid)
+        if len(result) == 0 and tid is not None:
+            raise HTTPException(status_code=404, detail="Team not found")
