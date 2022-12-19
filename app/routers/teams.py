@@ -37,7 +37,7 @@ async def read_team(tid: str):
     return TeamsController.get(teams_repository, tid, top=True)
 
 
-@router.put("/teams/{tid}", tags=["teams"], response_model=Message)
+@router.put("/teams/{tid}", tags=["teams"], response_model=Teams)
 async def update_user(tid: str, team: TeamUpdate):
     return TeamsController.put(teams_repository, tid, team)
 
