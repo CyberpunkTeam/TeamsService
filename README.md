@@ -1,6 +1,6 @@
 # TeamService
 
-[![.github/workflows/pipeline.yml](https://github.com/CyberpunkTeam/TeamsService/actions/workflows/pipeline.yml/badge.svg)](https://github.com/CyberpunkTeam/TeamsService/actions/workflows/pipeline.yml)
+[![codecov](https://codecov.io/gh/CyberpunkTeam/TeamsService/branch/master/graph/badge.svg?token=8CPFVZPEXZ)](https://codecov.io/gh/CyberpunkTeam/TeamsService)
 
 
 ## Setup
