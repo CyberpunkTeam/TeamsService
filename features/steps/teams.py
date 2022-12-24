@@ -1,3 +1,6 @@
+import time
+from datetime import datetime
+
 from behave import *
 
 
@@ -52,6 +55,10 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     assert context.response.status_code == 201
+    local = datetime.now()
+    team = context.response.json()
+    assert team.get("created_date").split(":")[0] == local.strftime("%d-%m-%Y")
+    assert team.get("updated_date").split(":")[0] == local.strftime("%d-%m-%Y")
 
 
 @when('completo el formulario de alta de equipo y no completo el "{field_name}"')
@@ -153,7 +160,7 @@ def step_impl(context, name):
     url = "/teams/" + context.vars["tid"] + "/members/" + context.vars["new_member_uid"]
     mimetype = "application/json"
     headers = {"Content-Type": mimetype, "Accept": mimetype}
-
+    time.sleep(1)  # test created_date vs updated_date
     context.response = context.client.post(url, headers=headers)
 
 
@@ -178,6 +185,7 @@ def step_impl(context):
 
     team = response.json()
     assert len(team["members"]) == context.vars["members_amount"] + 1
+    assert team.get("created_date") < team.get("updated_date")
 
 
 @given(
