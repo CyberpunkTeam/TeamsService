@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-
+from datetime import datetime
 from app.models.requests.team_update import TeamUpdate
 from app.models.teams import Teams
 
@@ -11,6 +11,9 @@ class TeamsController:
             raise HTTPException(status_code=400, detail="Team name is not available")
         team.tid = Teams.get_tid()
         team.members = [team.owner]
+        local = datetime.now()
+        team.created_date = local.strftime("%d-%m-%Y:%H:%M:%S")
+        team.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
         ok = repository.insert(team)
         if not ok:
             raise HTTPException(status_code=500, detail="Error saving")
@@ -29,6 +32,8 @@ class TeamsController:
     @staticmethod
     def update(repository, team: Teams):
         try:
+            local = datetime.now()
+            team.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
             ok = repository.update_team(team)
             if not ok:
                 raise HTTPException(status_code=500, detail="Error to update team")
@@ -44,11 +49,16 @@ class TeamsController:
             raise HTTPException(status_code=400, detail="Member is already in team")
 
         team.members.append(new_member)
+        local = datetime.now()
+        team.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
 
         return TeamsController.update(repository, team)
 
     @staticmethod
     def put(repository, tid, team: TeamUpdate):
+        local = datetime.now()
+        team.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
+
         TeamsController.exists(repository, tid)
         team.tid = tid
         if repository.put(team):

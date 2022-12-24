@@ -12,6 +12,8 @@ class Teams(BaseModel):
     project_preferences: List[str]
     owner: str
     members: Optional[List[str]] = []
+    created_date: Optional[str]
+    updated_date: Optional[str]
 
     def to_json(self):
         return loads(self.json(exclude_defaults=True))
@@ -25,6 +27,8 @@ class Teams(BaseModel):
             "project_preferences": list,
             "owner": str,
             "members": list,
+            "created_date": str,
+            "updated_date": str,
         }
 
     @staticmethod
