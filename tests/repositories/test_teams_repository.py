@@ -1,7 +1,4 @@
-from http.client import HTTPException
-
 import mongomock
-import pytest
 
 from app import config
 from app.models.teams import Teams

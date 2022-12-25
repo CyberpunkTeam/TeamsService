@@ -25,6 +25,7 @@ def before_feature(context, feature):
         {}
     )  # Rollback de variables entre feature (vars permite compartir variables entre steps)
     context.client.post("/teams/reset")
+    context.client.post("/team_invitations/reset")
 
 
 #
@@ -32,6 +33,7 @@ def before_feature(context, feature):
 
 def after_scenario(context, scenario):
     context.client.post("/teams/reset")
+    context.client.post("/team_invitations/reset")
 
 
 #
