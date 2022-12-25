@@ -7,7 +7,6 @@ from app import config
 from app.controllers.team_invitations_controller import TeamInvitationsController
 from app.models.requests.team_invitations_update import TeamInvitationsUpdate
 from app.models.team_invitations import TeamInvitations
-from app.models.teams import Teams
 from app.repositories.team_invitations_repository import TeamInvitationsRepository
 
 router = APIRouter()
