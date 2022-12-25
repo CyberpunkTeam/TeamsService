@@ -5,6 +5,8 @@ from json import loads
 from typing import Optional
 from pydantic import BaseModel
 
+from app.models.teams import Teams
+
 
 class TeamInvitations(BaseModel):
     tiid: Optional[str]
@@ -14,6 +16,7 @@ class TeamInvitations(BaseModel):
     created_date: Optional[str]
     updated_date: Optional[str]
     state: Optional[str]
+    metadata: Optional[dict]
 
     def to_json(self):
         return loads(self.json(exclude_defaults=True))

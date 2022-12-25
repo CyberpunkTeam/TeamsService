@@ -123,6 +123,7 @@ def step_impl(context, name):
 
     assert response.status_code == 201
     context.vars["tid"] = response.json()["tid"]
+    context.vars[f"{name}_tid"] = response.json()["tid"]
 
 
 @then("se me informa que ya existe un equipo con ese nombre")

@@ -39,5 +39,4 @@ class TeamInvitationsController:
             raise HTTPException(
                 status_code=500, detail="Error to update team invitation"
             )
-        result = repository.get(tiid=tiid)
-        return result[0]
+        return TeamInvitationsController.get(repository, tiid=tiid)

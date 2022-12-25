@@ -9,7 +9,6 @@ def step_impl(context, name, team_name):
     :type context: behave.runner.Context
     """
     context.vars[f"{name}_uid"] = "u1"
-    context.vars[f"{team_name}_tid"] = "t2"
 
     mimetype = "application/json"
     headers = {"Content-Type": mimetype, "Accept": mimetype}
@@ -23,9 +22,10 @@ def step_impl(context, name, team_name):
     context.response = context.client.post(url, json=body, headers=headers)
 
 
-@then('veo que se crea la invitacion de "Gonzalo Marino" al equipo "lambda team"')
-def step_impl(context):
+@then('veo que se crea la invitacion de "{name}" al equipo "lambda team"')
+def step_impl(context, name):
     """
+    :param name: str
     :type context: behave.runner.Context
     """
     assert context.response.status_code == 201
@@ -39,7 +39,6 @@ def step_impl(context, name, team_name):
     :type context: behave.runner.Context
     """
     context.vars[f"{name}_uid"] = "u1"
-    context.vars[f"{team_name}_tid"] = "t2"
 
     mimetype = "application/json"
     headers = {"Content-Type": mimetype, "Accept": mimetype}
