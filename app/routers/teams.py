@@ -48,5 +48,5 @@ async def update_user(tid: str, team: TeamUpdate):
     response_model=Message,
     status_code=201,
 )
-async def create_team(tid: str, mid: str):
+async def create_team_member(tid: str, mid: str):
     return TeamsController.add_member(teams_repository, tid, mid)
