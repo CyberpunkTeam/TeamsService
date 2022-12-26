@@ -42,13 +42,17 @@ async def create_team_invitations(team_invitation: TeamInvitations):
 
 @router.get("/team_invitations/", tags=["teams"], response_model=List[TeamInvitations])
 async def list_team_invitations(
-    tid: str = None, postulant_uid: str = None, team_owner_uid: str = None
+    tid: str = None,
+    postulant_uid: str = None,
+    team_owner_uid: str = None,
+    state: str = None,
 ):
     invitations = TeamInvitationsController.get(
         team_invitations_repository,
         tid=tid,
         team_owner_uid=team_owner_uid,
         postulant_uid=postulant_uid,
+        state=state,
     )
     for invitation in invitations:
         team = TeamsController.get(teams_repository, tid=invitation.tid, top=True)

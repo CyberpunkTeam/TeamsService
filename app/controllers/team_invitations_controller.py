@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 
 from app.models.requests.team_invitations_update import TeamInvitationsUpdate
+from app.models.states import States
 from app.models.team_invitations import TeamInvitations
 
 
@@ -14,12 +15,20 @@ class TeamInvitationsController:
         return team_invitation
 
     @staticmethod
-    def get(repository, tid=None, team_owner_uid=None, postulant_uid=None, tiid=None):
+    def get(
+        repository,
+        tid=None,
+        team_owner_uid=None,
+        postulant_uid=None,
+        tiid=None,
+        state: States = None,
+    ):
         result = repository.get(
             tid=tid,
             team_owner_uid=team_owner_uid,
             postulant_uid=postulant_uid,
             tiid=tiid,
+            state=state,
         )
 
         if tiid is not None:
