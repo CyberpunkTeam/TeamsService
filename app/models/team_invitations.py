@@ -5,7 +5,7 @@ from json import loads
 from typing import Optional
 from pydantic import BaseModel
 
-from app.models.teams import Teams
+from app.models.states import States
 
 
 class TeamInvitations(BaseModel):
@@ -15,7 +15,7 @@ class TeamInvitations(BaseModel):
     postulant_uid: str
     created_date: Optional[str]
     updated_date: Optional[str]
-    state: Optional[str]
+    state: Optional[States]
     metadata: Optional[dict]
 
     def to_json(self):
@@ -43,4 +43,4 @@ class TeamInvitations(BaseModel):
         local = datetime.now()
         self.created_date = local.strftime("%d-%m-%Y:%H:%M:%S")
         self.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
-        self.state = "PENDING"
+        self.state = States.PENDING
