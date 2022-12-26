@@ -15,31 +15,26 @@ class TeamInvitationsRepository(DataBase):
         else:
             super().__init__(url, db_name)
 
-    def get(self, tid=None, team_owner_uid=None, postulant_uid=None, tiid=None):
+    def get(
+        self, tid=None, team_owner_uid=None, postulant_uid=None, tiid=None, state=None
+    ):
+        params = {}
+
+        if state is not None:
+            params["state"] = state
+
         if tid is not None:
-            return self.find_by(
-                self.COLLECTION_NAME, "tid", tid, output_model=TeamInvitations
-            )
-        elif team_owner_uid is not None:
-            return self.find_by(
-                self.COLLECTION_NAME,
-                "team_owner_uid",
-                team_owner_uid,
-                output_model=TeamInvitations,
-            )
-        elif postulant_uid is not None:
-            return self.find_by(
-                self.COLLECTION_NAME,
-                "postulant_uid",
-                postulant_uid,
-                output_model=TeamInvitations,
-            )
-        elif tiid is not None:
-            return self.find_by(
-                self.COLLECTION_NAME, "tiid", tiid, output_model=TeamInvitations
-            )
-        else:
-            return self.filter(self.COLLECTION_NAME, {}, output_model=TeamInvitations)
+            params["tid"] = tid
+        if team_owner_uid is not None:
+            params["team_owner_uid"] = team_owner_uid
+
+        if postulant_uid is not None:
+            params["postulant_uid"] = postulant_uid
+
+        if tiid is not None:
+            params["tiid"] = tiid
+
+        return self.filter(self.COLLECTION_NAME, params, output_model=TeamInvitations)
 
     def insert(self, team: TeamInvitations):
         return self.save(self.COLLECTION_NAME, team)
