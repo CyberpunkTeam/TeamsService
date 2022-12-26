@@ -28,11 +28,6 @@ class TeamInvitationsController:
 
     @staticmethod
     def update(repository, tiid, team_invitation: TeamInvitationsUpdate):
-        if not (team_invitation.state in ["REJECTED", "ACCEPTED"]):
-            raise HTTPException(
-                status_code=500,
-                detail="Error invalid state, state must be 'REJECTED' or 'ACCEPTED'",
-            )
         team_invitation.complete(tiid)
         ok = repository.update_team(team_invitation)
         if not ok:

@@ -3,10 +3,12 @@ from json import loads
 from typing import Optional
 from pydantic import BaseModel
 
+from app.models.states import States
+
 
 class TeamInvitationsUpdate(BaseModel):
     tiid: Optional[str]
-    state: str
+    state: States
     updated_date: Optional[str]
 
     def to_json(self):
