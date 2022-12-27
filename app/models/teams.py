@@ -35,3 +35,6 @@ class Teams(BaseModel):
     def get_tid():
         myuuid = uuid.uuid4()
         return str(myuuid)
+
+    def get_id(self):
+        return self.tid

@@ -30,6 +30,11 @@ class TeamsController:
         return result
 
     @staticmethod
+    def search(repository, search):
+        fields = ["name"]
+        return repository.search(fields, search)
+
+    @staticmethod
     def update(repository, team: Teams):
         try:
             local = datetime.now()

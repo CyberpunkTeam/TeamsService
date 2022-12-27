@@ -121,7 +121,7 @@ yaml = ["PyYAML (>=3.10)"]
 
 [[package]]
 name = "cpunk-mongo"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 category = "main"
 optional = false
@@ -595,7 +595,7 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5f115106633af6620b4a08664d6900936c47f2ce4f23c400a11cfac1a854feab"
+content-hash = "d34770b22d8d49338d74159b35cfe3f8879f24cadd8209687ec21ae2d2f06b9f"
 
 [metadata.files]
 anyio = []

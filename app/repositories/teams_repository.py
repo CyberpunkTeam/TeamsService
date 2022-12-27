@@ -51,3 +51,6 @@ class TeamsRepository(DataBase):
 
     def put(self, team: TeamUpdate):
         return self.update(self.COLLECTION_NAME, "tid", team.tid, team)
+
+    def search(self, fields, value):
+        return self.ilike(self.COLLECTION_NAME, fields, value, output_model=Teams)
