@@ -280,3 +280,28 @@ def step_impl(context, name, technologies, project_preferences):
     assert team_updated.get("project_preferences") == project_preferences_list
     assert team_updated.get("tid") == context.vars["tid"]
     assert team_updated.get("owner") == context.vars["owner"]
+
+
+@when('busco "{word}"')
+def step_impl(context, word):
+    """
+    :param word: str
+    :type context: behave.runner.Context
+    """
+    url = f"/teams/?search={word}"
+    context.response = context.client.get(url)
+
+    assert context.response.status_code == 200
+
+
+@then('me retorna al equipo con nombre "{name}"')
+def step_impl(context, name):
+    """
+    :param name: str
+    :type context: behave.runner.Context
+    """
+    values = []
+    for team in context.response.json():
+        values.append(team.get("name"))
+
+    assert name in values

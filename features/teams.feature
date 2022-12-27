@@ -58,3 +58,14 @@ Feature: CRUD Team
     Then se me informa que se actualizo correctamente
 
     And puedo ver que el equipo se actualizo a nombre "DevArmy 2", tecnologias "Java" y preferencia de proyectos de tipo "Web".
+
+
+  Scenario: Buscar equipo por nombre
+    Given ya existe un equipo con nombre "DevArmy", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+    And ya existe un equipo con nombre "DevArmy 2", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+    And ya existe un equipo con nombre "Gonzalitos", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+
+    When busco "dev"
+
+    Then me retorna al equipo con nombre "DevArmy"
+    And me retorna al equipo con nombre "DevArmy 2"
