@@ -28,11 +28,11 @@ async def create_team(team: Teams):
 
 
 @router.get("/teams/", tags=["teams"], response_model=List[Teams])
-async def list_team(mid: str = None, search: str = None):
+async def list_team(mid: str = None, search: str = None, owner: str = None):
     if search is not None:
         return TeamsController.search(teams_repository, search)
 
-    return TeamsController.get(teams_repository, uid=mid)
+    return TeamsController.get(teams_repository, uid=mid, owner=owner)
 
 
 @router.get("/teams/{tid}", tags=["teams"], response_model=Teams)

@@ -201,13 +201,14 @@ def step_impl(context, name, technologies, project_preferences):
     """
     technologies_list = technologies.split(",")
     project_preferences_list = project_preferences.split(",")
+    owner = "1234"
     team_to_save = {
         "name": name,
         "technologies": technologies_list,
         "project_preferences": project_preferences_list,
-        "owner": "1234",
+        "owner": owner,
     }
-    context.vars["owner"] = "1234"
+    context.vars["owner"] = owner
     mimetype = "application/json"
     headers = {"Content-Type": mimetype, "Accept": mimetype}
 
@@ -305,3 +306,22 @@ def step_impl(context, name):
         values.append(team.get("name"))
 
     assert name in values
+
+
+@step("soy dueño de estos equipos")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    pass
+
+
+@when("busco mis equipos")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    url = f"/teams/?owner={context.vars['owner']}"
+    context.response = context.client.get(url)
+
+    assert context.response.status_code == 200
