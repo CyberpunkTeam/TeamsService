@@ -15,11 +15,15 @@ class TeamsRepository(DataBase):
         else:
             super().__init__(url, db_name)
 
-    def get(self, tid=None, uid=None):
+    def get(self, tid=None, uid=None, owner=None):
         if tid is None and uid is None:
             return self.filter(self.COLLECTION_NAME, {}, output_model=Teams)
         elif uid is not None:
             return self.list_teams_filter_in_by("members", [uid])
+        elif creator is not None:
+            return self.find_by(
+                self.COLLECTION_NAME, "owner", owner, output_model=Teams
+            )
         else:
             return self.find_by(self.COLLECTION_NAME, "tid", tid, output_model=Teams)
 

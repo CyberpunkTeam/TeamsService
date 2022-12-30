@@ -60,12 +60,13 @@ Feature: CRUD Team
     And puedo ver que el equipo se actualizo a nombre "DevArmy 2", tecnologias "Java" y preferencia de proyectos de tipo "Web".
 
 
-  Scenario: Buscar equipo por nombre
+  Scenario: Buscar equipo por creador
     Given ya existe un equipo con nombre "DevArmy", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
     And ya existe un equipo con nombre "DevArmy 2", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
     And ya existe un equipo con nombre "Gonzalitos", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
-
-    When busco "dev"
+    And soy dueño de estos equipos
+    When busco mis equipos
 
     Then me retorna al equipo con nombre "DevArmy"
     And me retorna al equipo con nombre "DevArmy 2"
+    And me retorna al equipo con nombre "Gonzalitos"
