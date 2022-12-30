@@ -136,3 +136,37 @@ def test_add_member_to_team():
 
     team_returned = TeamsController.get(repository, result.tid, top=True)
     assert len(team_returned.members) == 2
+
+
+@mongomock.patch(servers=(("server.example.com", 27017),))
+def test_get_teams_by_owner():
+    owner_1 = "1234"
+    owner_2 = "5678"
+    team_1 = Teams(
+        name="GreenTeam 1",
+        technologies=["Python", "React"],
+        project_preferences=["web", "AI", "Crypto"],
+        owner=owner_1,
+    )
+    team_2 = Teams(
+        name="GreenTeam 2",
+        technologies=["Python", "React"],
+        project_preferences=["web", "AI", "Crypto"],
+        owner=owner_2,
+    )
+    team_3 = Teams(
+        name="GreenTeam 3",
+        technologies=["Python", "React"],
+        project_preferences=["web", "AI", "Crypto"],
+        owner=owner_1,
+    )
+    repository = TeamsRepository("server.example.com", "test")
+    TeamsController.post(repository, team_1)
+    TeamsController.post(repository, team_2)
+    TeamsController.post(repository, team_3)
+
+    teams_owner_1 = TeamsController.get(repository, owner=owner_1)
+    teams_owner_2 = TeamsController.get(repository, owner=owner_2)
+
+    assert len(teams_owner_1) == 2
+    assert len(teams_owner_2) == 1
