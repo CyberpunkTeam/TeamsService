@@ -20,7 +20,7 @@ class TeamsRepository(DataBase):
             return self.filter(self.COLLECTION_NAME, {}, output_model=Teams)
         elif uid is not None:
             return self.list_teams_filter_in_by("members", [uid])
-        elif creator is not None:
+        elif owner is not None:
             return self.find_by(
                 self.COLLECTION_NAME, "owner", owner, output_model=Teams
             )
