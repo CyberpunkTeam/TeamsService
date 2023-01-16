@@ -21,7 +21,7 @@ team_members_reviews_repository = TeamMembersReviewsRepository(
 @router.post(
     "/team_members_reviews/",
     tags=["teams_reviews"],
-    response_model=TeamsReviews,
+    response_model=TeamMembersReviews,
     status_code=201,
 )
 async def create_team_member_review(team_member_review: TeamMembersReviews):
@@ -33,7 +33,7 @@ async def create_team_member_review(team_member_review: TeamMembersReviews):
 @router.get(
     "/team_members_reviews/",
     tags=["teams_reviews"],
-    response_model=List[TeamsReviews],
+    response_model=List[TeamMembersReviews],
 )
 async def list_team_member_review(
     pid: str = None,
