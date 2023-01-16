@@ -23,7 +23,7 @@ projects_reviews_repository = TeamsReviewsRepository(
     response_model=TeamsReviews,
     status_code=201,
 )
-async def create_project(project_review: TeamsReviews):
+async def create_team_review(project_review: TeamsReviews):
     return TeamsReviewsController.post(projects_reviews_repository, project_review)
 
 
@@ -32,5 +32,5 @@ async def create_project(project_review: TeamsReviews):
     tags=["teams_reviews"],
     response_model=List[TeamsReviews],
 )
-async def list_projects(pid: str = None, tid: str = None):
+async def list_team_reviews(pid: str = None, tid: str = None):
     return TeamsReviewsController.get(projects_reviews_repository, pid=pid, tid=tid)
