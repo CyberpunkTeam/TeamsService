@@ -34,6 +34,7 @@ def before_feature(context, feature):
 def after_scenario(context, scenario):
     context.client.post("/teams/reset")
     context.client.post("/team_invitations/reset")
+    context.client.post("/teams_positions/reset")
 
 
 #
