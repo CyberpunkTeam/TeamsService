@@ -37,7 +37,7 @@ class TeamsPositionsRepository(DataBase):
     def reset(self):
         return self.delete_all(self.COLLECTION_NAME)
 
-    def update_team(self, team_position: TeamsPositions):
+    def update_position_team(self, team_position: TeamsPositions):
         ok = self.update(
             self.COLLECTION_NAME, "tpid", team_position.tpid, team_position
         )

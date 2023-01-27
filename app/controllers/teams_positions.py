@@ -41,9 +41,28 @@ class TeamsPositionsController:
                 repository, teams_repository, tpid=tpid
             )
             position.candidates.append(candidate_id)
-            ok = repository.update(position)
+            ok = repository.update_position_team(position)
             if not ok:
-                raise HTTPException(status_code=500, detail="Error to update team")
+                raise HTTPException(
+                    status_code=500, detail="Error to add team candidate"
+                )
+            return position
+
+        except:
+            raise HTTPException(status_code=500, detail="Error to update team")
+
+    @staticmethod
+    def remove_candidate(repository, teams_repository, tpid=None, candidate_id=None):
+        try:
+            position = TeamsPositionsController.get(
+                repository, teams_repository, tpid=tpid
+            )
+            position.candidates.remove(candidate_id)
+            ok = repository.update_position_team(position)
+            if not ok:
+                raise HTTPException(
+                    status_code=500, detail="Error to remove candidate team"
+                )
             return position
 
         except:
