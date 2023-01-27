@@ -26,10 +26,9 @@ class TeamsPositionsController:
         tids = [team_position.tid for team_position in result]
         if len(tids) > 0:
             teams = team_repository.get_by_list(tids)
-            for i in range(len(result)):
-                team_position = result[i]
-                team = teams[i]
-                team_position.team = team
+            teams_hash = {team.tid: team for team in teams}
+            for team_position in result:
+                team_position.team = teams_hash.get(team_position.tid)
 
         if tpid is not None:
             return result[0]
