@@ -31,7 +31,9 @@ async def reset():
     status_code=201,
 )
 async def create_team_position(teams_positions: TeamsPositions):
-    return TeamsPositionsController.post(teams_positions_repository, teams_positions)
+    return TeamsPositionsController.post(
+        teams_positions_repository, teams_repository, teams_positions
+    )
 
 
 @router.get(
@@ -51,7 +53,9 @@ async def list_team_positions(tid: str = None, state: str = None):
     response_model=TeamsPositions,
 )
 async def get_team_positions(tpid: str = None):
-    return TeamsPositionsController.get(teams_positions_repository, tpid=tpid)
+    return TeamsPositionsController.get(
+        teams_positions_repository, teams_repository, tpid=tpid
+    )
 
 
 @router.post(
@@ -61,7 +65,7 @@ async def get_team_positions(tpid: str = None):
 )
 async def add_candidate(tpid: str = None, uid: str = None):
     return TeamsPositionsController.add_candidate(
-        teams_positions_repository, tpid=tpid, candidate_id=uid
+        teams_positions_repository, teams_repository, tpid=tpid, candidate_id=uid
     )
 
 
