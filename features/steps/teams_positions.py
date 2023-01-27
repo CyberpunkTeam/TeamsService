@@ -115,3 +115,54 @@ def step_impl(context, amount, team_name):
     """
     positions = context.vars[f"{team_name}_open_positions"]
     assert len(positions) == int(amount)
+
+
+@when('cuando agrego al candidato "{name}" al puesto del equipo "{team_name}"')
+def step_impl(context, name, team_name):
+    """
+    :type context: behave.runner.Context
+    """
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+    uid = f"{len(name)}"
+    tpid = context.vars[f"{team_name}_tpid"]
+    url = f"/teams_positions/{tpid}/candidates/{uid}"
+    context.response = context.client.post(url, headers=headers)
+    assert context.response.status_code == 200
+
+
+@then("cuando pido los candidatos, encuentro {amount} candidato/s")
+def step_impl(context, amount):
+    """
+    :type context: behave.runner.Context
+    """
+    position = context.response.json()
+    assert len(position.get("candidates")) == int(amount)
+
+
+@step('"{name}" es candidato al puesto del equipo "{team_name}"')
+def step_impl(context, name, team_name):
+    """
+    :type context: behave.runner.Context
+    """
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+    uid = f"{len(name)}"
+    tpid = context.vars[f"{team_name}_tpid"]
+    url = f"/teams_positions/{tpid}/candidates/{uid}"
+    context.response = context.client.post(url, headers=headers)
+    assert context.response.status_code == 200
+
+
+@when('cuando elimino "{name}" del puesto del equipo "{team_name}"')
+def step_impl(context, name, team_name):
+    """
+    :type context: behave.runner.Context
+    """
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+    uid = f"{len(name)}"
+    tpid = context.vars[f"{team_name}_tpid"]
+    url = f"/teams_positions/{tpid}/candidates/{uid}"
+    context.response = context.client.delete(url, headers=headers)
+    assert context.response.status_code == 200

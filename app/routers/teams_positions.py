@@ -69,6 +69,17 @@ async def add_candidate(tpid: str = None, uid: str = None):
     )
 
 
+@router.delete(
+    "/teams_positions/{tpid}/candidates/{uid}",
+    tags=["teams_positions"],
+    response_model=TeamsPositions,
+)
+async def add_candidate(tpid: str = None, uid: str = None):
+    return TeamsPositionsController.remove_candidate(
+        teams_positions_repository, teams_repository, tpid=tpid, candidate_id=uid
+    )
+
+
 @router.put("/teams_positions/{tpid}", tags=["teams"], response_model=TeamsPositions)
 async def update_user(tpid: str, team_position: TeamPositionUpdate):
     return TeamsPositionsController.put(teams_positions_repository, tpid, team_position)

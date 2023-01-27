@@ -31,3 +31,16 @@ Feature: CRUD position
     And pido las posiciones abiertas para el team "DevArmy"
     Then recibo 0 posicion abierta para el equipo "Alfa"
     And  recibo 1 posicion abierta para el equipo "DevArmy"
+
+  Scenario: Add candidate to position
+    Given ya existe un equipo con nombre "DevArmy", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+    And existe un position para el equipo "DevArmy"
+    When cuando agrego al candidato "Matias Fonseca" al puesto del equipo "DevArmy"
+    Then cuando pido los candidatos, encuentro 1 candidato/s
+
+  Scenario: Remove candidate to position
+    Given ya existe un equipo con nombre "DevArmy", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+    And existe un position para el equipo "DevArmy"
+    And "Matias Fonseca" es candidato al puesto del equipo "DevArmy"
+    When cuando elimino "Matias Fonseca" del puesto del equipo "DevArmy"
+    Then cuando pido los candidatos, encuentro 0 candidato/s
