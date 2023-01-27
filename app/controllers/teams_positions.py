@@ -8,11 +8,14 @@ from app.models.teams_positions import TeamsPositions
 
 class TeamsPositionsController:
     @staticmethod
-    def post(repository, team_position: TeamsPositions):
+    def post(repository, teams_repository, team_position: TeamsPositions):
         team_position.complete()
         ok = repository.insert(team_position)
         if not ok:
             raise HTTPException(status_code=500, detail="Error saving")
+
+        team = teams_repository.get(tid=team_position.tid)
+        team_position.team = team[0]
 
         return team_position
 
@@ -33,9 +36,11 @@ class TeamsPositionsController:
         return result
 
     @staticmethod
-    def add_candidate(repository, tpid=None, candidate_id=None):
+    def add_candidate(repository, teams_repository, tpid=None, candidate_id=None):
         try:
-            position = TeamsPositionsController.get(repository, tpid=tpid)
+            position = TeamsPositionsController.get(
+                repository, teams_repository, tpid=tpid
+            )
             position.candidates.append(candidate_id)
             ok = repository.update(position)
             if not ok:
