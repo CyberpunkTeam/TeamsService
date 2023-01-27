@@ -6,6 +6,7 @@ import uuid
 from pydantic.main import BaseModel
 
 from app.models.position_states import PositionStates
+from app.models.teams import Teams
 
 
 class TeamsPositions(BaseModel):
@@ -17,6 +18,7 @@ class TeamsPositions(BaseModel):
     created_date: Optional[str] = ""
     updated_date: Optional[str] = ""
     state: PositionStates = None
+    team: Optional[Teams]
 
     def to_json(self):
         return loads(self.json(exclude_defaults=True))

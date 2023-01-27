@@ -8,6 +8,7 @@ from app.controllers.teams_positions import TeamsPositionsController
 from app.models.requests.team_position_update import TeamPositionUpdate
 from app.models.teams_positions import TeamsPositions
 from app.repositories.teams_positions_repository import TeamsPositionsRepository
+from app.routers.teams import teams_repository
 
 router = APIRouter()
 
@@ -40,7 +41,7 @@ async def create_team_position(teams_positions: TeamsPositions):
 )
 async def list_team_positions(tid: str = None, state: str = None):
     return TeamsPositionsController.get(
-        teams_positions_repository, tid=tid, state=state
+        teams_positions_repository, teams_repository, tid=tid, state=state
     )
 
 

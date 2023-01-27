@@ -17,8 +17,17 @@ class TeamsPositionsController:
         return team_position
 
     @staticmethod
-    def get(repository, tid=None, state=None, tpid=None):
+    def get(repository, team_repository, tid=None, state=None, tpid=None):
         result = repository.get(tid=tid, state=state, tpid=tpid)
+
+        tids = [team_position.tid for team_position in result]
+        if len(tids) > 0:
+            teams = team_repository.get_by_list(tids)
+            for i in range(len(result)):
+                team_position = result[i]
+                team = teams[i]
+                team_position.team = team
+
         if tpid is not None:
             return result[0]
         return result
