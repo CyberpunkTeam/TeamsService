@@ -58,3 +58,8 @@ class TeamsRepository(DataBase):
 
     def search(self, fields, value):
         return self.ilike(self.COLLECTION_NAME, fields, value, output_model=Teams)
+
+    def get_by_list(self, tid_list):
+        return self.find_by(
+            self.COLLECTION_NAME, "tid", {"$in": tid_list}, output_model=Teams
+        )
