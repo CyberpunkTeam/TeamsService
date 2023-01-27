@@ -218,6 +218,7 @@ def step_impl(context, name, technologies, project_preferences):
 
     assert response.status_code == 201
     context.vars["tid"] = response.json()["tid"]
+    context.vars[f"{name}_tid"] = response.json()["tid"]
 
 
 @when(

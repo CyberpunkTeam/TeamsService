@@ -26,7 +26,7 @@ def step_impl(context):
     assert context.response.status_code == 201
 
 
-@when('existe un position para el equipo "{team_name}"')
+@step('existe un position para el equipo "{team_name}"')
 def step_impl(context, team_name):
     """
     :type context: behave.runner.Context
@@ -42,6 +42,7 @@ def step_impl(context, team_name):
 
     context.response = context.client.post(url, json=body, headers=headers)
     assert context.response.status_code == 201
+    context.vars[f"{team_name}_tpid"] = context.response.json()["tpid"]
 
 
 @then("existen {amount} posiciones abiertas")
@@ -50,7 +51,45 @@ def step_impl(context, amount):
     :type context: behave.runner.Context
     """
     url = "/teams_positions/?state=OPEN"
-    response = context.client.get(url)
+    context.response = context.client.get(url)
 
+    assert context.response.status_code == 200
+    assert len(context.response.json()) == int(amount)
+
+
+@step('la posicion del equipo "{team_name}" se cierra')
+def step_impl(context, team_name):
+    """
+    :param team_name: str
+    :type context: behave.runner.Context
+    """
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+    tpid = context.vars[f"{team_name}_tpid"]
+    state_updated = "CLOSED"
+    body = {"state": state_updated}
+    url = f"/teams_positions/{tpid}"
+    response = context.client.put(url, json=body, headers=headers)
     assert response.status_code == 200
-    assert len(response.json()) == int(amount)
+    team_position = response.json()
+    assert team_position.get("state") == state_updated
+
+
+@then("recibo {amount} posicion abierta")
+def step_impl(context, amount):
+    """
+    :poram amount: str
+    :type context: behave.runner.Context
+    """
+    assert len(context.response.json()) == int(amount)
+
+
+@when("pido las posiciones abiertas")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    url = "/teams_positions/?state=OPEN"
+    context.response = context.client.get(url)
+
+    assert context.response.status_code == 200

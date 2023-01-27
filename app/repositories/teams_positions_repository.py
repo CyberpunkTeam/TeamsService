@@ -1,5 +1,6 @@
 from cpunk_mongo.db import DataBase
 
+from app.models.requests.team_position_update import TeamPositionUpdate
 from app.models.teams_positions import TeamsPositions
 from app.models.teams_reviews import TeamsReviews
 
@@ -41,3 +42,8 @@ class TeamsPositionsRepository(DataBase):
             self.COLLECTION_NAME, "tpid", team_position.tpid, team_position
         )
         return ok
+
+    def put(self, team_position: TeamPositionUpdate):
+        return self.update(
+            self.COLLECTION_NAME, "tpid", team_position.tpid, team_position
+        )

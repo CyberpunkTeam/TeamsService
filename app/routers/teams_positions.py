@@ -5,6 +5,7 @@ from fastapi import APIRouter
 
 from app import config
 from app.controllers.teams_positions import TeamsPositionsController
+from app.models.requests.team_position_update import TeamPositionUpdate
 from app.models.teams_positions import TeamsPositions
 from app.repositories.teams_positions_repository import TeamsPositionsRepository
 
@@ -61,3 +62,8 @@ async def add_candidate(tpid: str = None, uid: str = None):
     return TeamsPositionsController.add_candidate(
         teams_positions_repository, tpid=tpid, candidate_id=uid
     )
+
+
+@router.put("/teams_positions/{tpid}", tags=["teams"], response_model=TeamsPositions)
+async def update_user(tpid: str, team_position: TeamPositionUpdate):
+    return TeamsPositionsController.put(teams_positions_repository, tpid, team_position)

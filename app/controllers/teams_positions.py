@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from fastapi import HTTPException
 
+from app.models.requests.team_position_update import TeamPositionUpdate
 from app.models.teams_positions import TeamsPositions
 
 
@@ -32,3 +35,15 @@ class TeamsPositionsController:
 
         except:
             raise HTTPException(status_code=500, detail="Error to update team")
+
+    @staticmethod
+    def put(repository, tpid, team_position: TeamPositionUpdate):
+        local = datetime.now()
+        team_position.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
+
+        team_position.tpid = tpid
+        if repository.put(team_position):
+            result = repository.get(tpid=tpid)
+            return result[0]
+        else:
+            raise HTTPException(status_code=500, detail="Error to update team position")
