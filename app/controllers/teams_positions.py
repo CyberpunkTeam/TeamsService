@@ -14,7 +14,7 @@ class TeamsPositionsController:
         if not ok:
             raise HTTPException(status_code=500, detail="Error saving")
 
-        team = teams_repository.get(tid=TeamsPositions.tid)
+        team = teams_repository.get(tid=team_position.tid)
         team_position.team = team[0]
 
         return team_position
