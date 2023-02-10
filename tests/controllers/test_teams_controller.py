@@ -6,6 +6,7 @@ from fastapi import HTTPException
 
 from app.controllers.teams_controller import TeamsController
 from app.models.teams import Teams
+from app.models.technologies import Technologies
 from app.repositories.teams_repository import TeamsRepository
 
 
@@ -15,14 +16,14 @@ def test_get_all_teams():
         Teams(
             name="GreenTeam",
             tid="1234",
-            technologies=["Python", "React"],
+            technologies=Technologies(programming_language=["Python", "React"]),
             project_preferences=["web", "AI", "Crypto"],
             owner="1234",
         ),
         Teams(
             name="VitalikArmy",
             tid="3333",
-            technologies=["Python", "TS"],
+            technologies=Technologies(programming_language=["Python", "React"]),
             project_preferences=["web3", "Crypto"],
             owner="1234",
         ),
@@ -37,14 +38,14 @@ def test_get_top_team():
         Teams(
             name="GreenTeam",
             tid="4211",
-            technologies=["Python", "React"],
+            technologies=Technologies(programming_language=["Python", "React"]),
             project_preferences=["web", "AI", "Crypto"],
             owner="1234",
         ),
         Teams(
             name="VitalikArmy",
             tid="4313",
-            technologies=["Python", "TS"],
+            technologies=Technologies(programming_language=["Python", "React"]),
             project_preferences=["web3", "Crypto"],
             owner="1234",
         ),
@@ -59,7 +60,7 @@ def test_get_team():
         Teams(
             name="GreenTeam",
             tid="4211",
-            technologies=["Python", "React"],
+            technologies=Technologies(programming_language=["Python", "React"]),
             project_preferences=["web", "AI", "Crypto"],
             owner="1234",
         )
@@ -81,7 +82,7 @@ def test_create_team():
     repository.insert.return_value = True
     team = Teams(
         name="GreenTeam",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
     )
@@ -97,7 +98,7 @@ def test_error_create_team():
     repository.insert.return_value = False
     team = Teams(
         name="GreenTeam",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
     )
@@ -110,7 +111,7 @@ def test_error_team_name_exists():
     repository.exists.return_value = True
     team = Teams(
         name="GreenTeam",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
     )
@@ -122,7 +123,7 @@ def test_error_team_name_exists():
 def test_add_member_to_team():
     team = Teams(
         name="GreenTeam",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
     )
@@ -144,19 +145,19 @@ def test_get_teams_by_owner():
     owner_2 = "5678"
     team_1 = Teams(
         name="GreenTeam 1",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner=owner_1,
     )
     team_2 = Teams(
         name="GreenTeam 2",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner=owner_2,
     )
     team_3 = Teams(
         name="GreenTeam 3",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner=owner_1,
     )

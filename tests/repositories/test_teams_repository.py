@@ -2,6 +2,7 @@ import mongomock
 
 from app import config
 from app.models.teams import Teams
+from app.models.technologies import Technologies
 from app.repositories.teams_repository import TeamsRepository
 
 
@@ -14,7 +15,7 @@ def test_save_teams():
     team = Teams(
         name="GreenTeam",
         tid="4211",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
     )
@@ -33,7 +34,7 @@ def test_get_team():
     team = Teams(
         name="GreenTeam",
         tid="4211",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
     )
@@ -50,7 +51,7 @@ def test_get_team():
 
     assert team_found.name == "GreenTeam"
     assert team_found.tid == "4211"
-    assert team_found.technologies == ["Python", "React"]
+    assert team_found.technologies.programming_language == ["Python", "React"]
     assert team_found.project_preferences == ["web", "AI", "Crypto"]
     assert team_found.owner == "1234"
 
@@ -64,7 +65,7 @@ def test_error_team_name_exists():
     team = Teams(
         name="GreenTeam",
         tid="4211",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
     )
@@ -85,7 +86,7 @@ def test_filter_members_by_uid():
     team = Teams(
         name="GreenTeam",
         tid="444",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="123444",
     )
@@ -95,7 +96,7 @@ def test_filter_members_by_uid():
     team = Teams(
         name="GreenTeam",
         tid="4211",
-        technologies=["Python", "React"],
+        technologies=Technologies(programming_language=["Python", "React"]),
         project_preferences=["web", "AI", "Crypto"],
         owner="1234",
         members=["4211", new_mid],
