@@ -12,6 +12,12 @@ def step_impl(context, team_name):
         "tid": context.vars["tid"],
         "title": "Software developer",
         "description": "We are looking for professionals who have a passion for learning, leading and feel the innovative spirit.",
+        "requirements": {
+            "programming_language": ["Python"],
+            "frameworks": ["Django"],
+            "cloud_providers": ["AWS"],
+            "databases": ["mongodb"],
+        },
     }
     url = "/teams_positions"
 
