@@ -28,7 +28,7 @@ def step_impl(context, name, technologies, project_preferences):
 
     context.vars["team_to_save"] = {
         "name": name,
-        "technologies": technologies_list,
+        "technologies": {"programming_language": technologies_list},
         "project_preferences": project_preferences_list,
         "owner": "1234",
     }
@@ -74,7 +74,7 @@ def step_impl(context, field_name):
     }
     team_to_save = {
         "name": "GreenTeam",
-        "technologies": ["Python", "JS"],
+        "technologies": {"programming_language": ["Python", "JS"]},
         "project_preferences": ["Web", "AI"],
         "owner": "1234",
     }
@@ -109,7 +109,7 @@ def step_impl(context, name):
     """
     team_to_save = {
         "name": name,
-        "technologies": ["Python", "JS"],
+        "technologies": {"programming_language": ["Python", "JS"]},
         "project_preferences": ["Web", "AI"],
         "owner": "1234",
     }
@@ -204,7 +204,7 @@ def step_impl(context, name, technologies, project_preferences):
     owner = "1234"
     team_to_save = {
         "name": name,
-        "technologies": technologies_list,
+        "technologies": {"programming_language": technologies_list},
         "project_preferences": project_preferences_list,
         "owner": owner,
     }
@@ -235,7 +235,7 @@ def step_impl(context, name, technologies, project_preferences):
     project_preferences_list = project_preferences.split(",")
     team_to_update = {
         "name": name,
-        "technologies": technologies_list,
+        "technologies": {"programming_language": technologies_list},
         "project_preferences": project_preferences_list,
     }
     context.vars["team_to_update"] = team_to_update
@@ -278,7 +278,10 @@ def step_impl(context, name, technologies, project_preferences):
     team_updated = response.json()
 
     assert team_updated.get("name") == name
-    assert team_updated.get("technologies") == technologies_list
+    assert (
+        team_updated.get("technologies").get("programming_language")
+        == technologies_list
+    )
     assert team_updated.get("project_preferences") == project_preferences_list
     assert team_updated.get("tid") == context.vars["tid"]
     assert team_updated.get("owner") == context.vars["owner"]
