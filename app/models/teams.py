@@ -18,6 +18,7 @@ class Teams(BaseModel):
     idioms: Optional[List[str]]
     technologies: Optional[Technologies]
     methodologies: Optional[List[str]]
+    temporal: Optional[bool]
 
     def to_json(self):
         return loads(self.json(exclude_defaults=True))
@@ -35,6 +36,7 @@ class Teams(BaseModel):
             "idioms": list,
             "technologies": dict,
             "methodologies": list,
+            "temporal": bool,
         }
 
     @staticmethod
