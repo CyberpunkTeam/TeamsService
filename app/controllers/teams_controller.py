@@ -14,6 +14,8 @@ class TeamsController:
         local = datetime.now()
         team.created_date = local.strftime("%d-%m-%Y:%H:%M:%S")
         team.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
+        team.temporal = team.temporal == True
+
         ok = repository.insert(team)
         if not ok:
             raise HTTPException(status_code=500, detail="Error saving")
