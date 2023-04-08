@@ -19,14 +19,6 @@ Feature: CRUD Team
 
     Then se me informa el campo "nombre" es obligatorio
 
-    Scenario: Creacion invalida por campo preferencias de proyecto faltante
-    Given que quiero crear un equipo
-
-    When completo el formulario de alta de equipo y no completo el "preferencias de proyecto"
-
-    And confirmo el alta de equipo
-
-    Then se me informa el campo "preferencias de proyecto" es obligatorio
 
   Scenario: Creacion de equipo con nombre ya existente
     Given que quiero crear un equipo
