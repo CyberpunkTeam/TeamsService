@@ -10,8 +10,8 @@ from app.models.technologies import Technologies
 class Teams(BaseModel):
     tid: Optional[str] = None
     name: str
-    project_preferences: List[str]
-    owner: str
+    project_preferences: Optional[List[str]]
+    owner: Optional[str]
     members: Optional[List[str]] = []
     created_date: Optional[str]
     updated_date: Optional[str]
