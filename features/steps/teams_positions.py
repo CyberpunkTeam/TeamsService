@@ -172,3 +172,50 @@ def step_impl(context, name, team_name):
     url = f"/teams_positions/{tpid}/candidates/{uid}"
     context.response = context.client.delete(url, headers=headers)
     assert context.response.status_code == 200
+
+
+@step(
+    'existe una posicion para el equipo "{team_name}" con requerimientos de lenguajes "{programming_language}", frameworks "{frameworks}"'
+)
+def step_impl(context, team_name, programming_language, frameworks):
+    """
+    :type context: behave.runner.Context
+    """
+    mimetype = "application/json"
+    headers = {"Content-Type": mimetype, "Accept": mimetype}
+    body = {
+        "tid": context.vars["tid"],
+        "title": "Software developer",
+        "description": "We are looking for professionals who have a passion for learning, leading and feel the innovative spirit.",
+        "requirements": {
+            "programming_language": programming_language.split(","),
+            "frameworks": frameworks.split(","),
+            "cloud_providers": [],
+            "databases": [],
+        },
+    }
+    url = "/teams_positions"
+
+    context.response = context.client.post(url, json=body, headers=headers)
+    assert context.response.status_code == 201
+    context.vars[f"{team_name}_tpid"] = context.response.json()["tpid"]
+
+
+@when('posiciones de lenguaje "{programming_language}"')
+def step_impl(context, programming_language):
+    """
+    :type context: behave.runner.Context
+    """
+    url = f"/teams_positions/?state=OPEN&programming_languages={programming_language}"
+    context.response = context.client.get(url)
+
+    assert context.response.status_code == 200
+    context.vars["result"] = context.response.json()
+
+
+@then("devuelve {amount} posicion abierta")
+def step_impl(context, amount):
+    """
+    :type context: behave.runner.Context
+    """
+    assert len(context.vars["result"]) == int(amount)

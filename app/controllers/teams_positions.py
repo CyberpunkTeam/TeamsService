@@ -20,8 +20,26 @@ class TeamsPositionsController:
         return team_position
 
     @staticmethod
-    def get(repository, team_repository, tid=None, state=None, tpid=None):
-        result = repository.get(tid=tid, state=state, tpid=tpid)
+    def get(
+        repository,
+        team_repository,
+        tid=None,
+        state=None,
+        tpid=None,
+        programming_languages=None,
+        frameworks=None,
+        platforms=None,
+        databases=None,
+    ):
+        result = repository.get(
+            tid=tid,
+            state=state,
+            tpid=tpid,
+            programming_languages=programming_languages,
+            frameworks=frameworks,
+            platforms=platforms,
+            databases=databases,
+        )
 
         tids = [team_position.tid for team_position in result]
         if len(tids) > 0:

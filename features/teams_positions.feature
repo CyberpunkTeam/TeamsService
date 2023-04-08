@@ -44,3 +44,11 @@ Feature: CRUD position
     And "Matias Fonseca" es candidato al puesto del equipo "DevArmy"
     When cuando elimino "Matias Fonseca" del puesto del equipo "DevArmy"
     Then cuando pido los candidatos, encuentro 0 candidato/s
+
+  Scenario: Filter team positions
+    Given ya existe un equipo con nombre "DevArmy", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+    And ya existe un equipo con nombre "Alfa", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+    And existe una posicion para el equipo "DevArmy" con requerimientos de lenguajes "Python,Java", frameworks "Django"
+    And existe una posicion para el equipo "Alfa" con requerimientos de lenguajes "Ruby", frameworks "Ruby on rails"
+    When posiciones de lenguaje "Python"
+    Then devuelve 1 posicion abierta

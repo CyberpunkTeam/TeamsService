@@ -16,7 +16,16 @@ class TeamsPositionsRepository(DataBase):
         else:
             super().__init__(url, db_name)
 
-    def get(self, tid=None, tpid=None, state=None):
+    def get(
+        self,
+        tid=None,
+        tpid=None,
+        state=None,
+        programming_languages=None,
+        frameworks=None,
+        platforms=None,
+        databases=None,
+    ):
         filters = {}
         if tid is not None:
             filters["tid"] = tid
@@ -24,6 +33,20 @@ class TeamsPositionsRepository(DataBase):
             filters["tpid"] = tpid
         if state is not None:
             filters["state"] = state
+
+        if programming_languages is not None and len(programming_languages) > 0:
+            filters["requirements.programming_language"] = {
+                "$in": programming_languages
+            }
+
+        if frameworks is not None and len(frameworks) > 0:
+            filters["requirements.frameworks"] = {"$in": frameworks}
+
+        if platforms is not None and len(platforms) > 0:
+            filters["requirements.platforms"] = {"$in": platforms}
+
+        if databases is not None and len(databases) > 0:
+            filters["requirements.databases"] = {"$in": databases}
 
         return self.filter(self.COLLECTION_NAME, filters, output_model=TeamsPositions)
 
