@@ -41,9 +41,25 @@ async def create_team_position(teams_positions: TeamsPositions):
     tags=["teams_positions"],
     response_model=List[TeamsPositions],
 )
-async def list_team_positions(tid: str = None, state: str = None):
+async def list_team_positions(
+    tid: str = None,
+    state: str = None,
+    programming_languages: str = None,
+    frameworks: str = None,
+    platforms: str = None,
+    databases: str = None,
+):
     return TeamsPositionsController.get(
-        teams_positions_repository, teams_repository, tid=tid, state=state
+        teams_positions_repository,
+        teams_repository,
+        tid=tid,
+        state=state,
+        programming_languages=programming_languages.split(",")
+        if programming_languages is not None
+        else programming_languages,
+        frameworks=frameworks.split(",") if frameworks is not None else frameworks,
+        platforms=platforms.split(",") if platforms is not None else platforms,
+        databases=databases.split(",") if databases is not None else databases,
     )
 
 
