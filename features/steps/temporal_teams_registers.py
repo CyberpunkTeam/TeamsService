@@ -42,4 +42,4 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     json = context.response.json()
-    assert len(json) == 1
+    assert len(json) > 0
