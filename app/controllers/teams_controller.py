@@ -10,11 +10,13 @@ class TeamsController:
         if repository.exists(team):
             raise HTTPException(status_code=400, detail="Team name is not available")
         team.tid = Teams.get_tid()
-        team.members = [team.owner]
+        if len(team.members) == 0:
+            team.members = [team.owner]
+
         local = datetime.now()
         team.created_date = local.strftime("%d-%m-%Y:%H:%M:%S")
         team.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
-        team.temporal = team.temporal == True
+        team.temporal = team.temporal if team.temporal else False
 
         ok = repository.insert(team)
         if not ok:
