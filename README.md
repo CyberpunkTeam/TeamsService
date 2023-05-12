@@ -2,7 +2,6 @@
 
 [![codecov](https://codecov.io/gh/CyberpunkTeam/TeamsService/branch/master/graph/badge.svg?token=8CPFVZPEXZ)](https://codecov.io/gh/CyberpunkTeam/TeamsService)
 
-
 ## Setup
 
 1. ```Install python ^3.9```
