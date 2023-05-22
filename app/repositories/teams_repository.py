@@ -69,6 +69,6 @@ class TeamsRepository(DataBase):
             self.COLLECTION_NAME, "tid", {"$in": tid_list}, output_model=Teams
         )
         if len(result) > 0:
-            result.sort(key=lambda thing: tid_list.index(thing.uid))
+            result.sort(key=lambda thing: tid_list.index(thing.tid))
 
         return result
