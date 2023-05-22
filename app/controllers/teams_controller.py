@@ -26,7 +26,7 @@ class TeamsController:
     @staticmethod
     def get(repository, tid=None, uid=None, owner=None, top=False, tids=None):
         if tids is not None:
-            repository.get_by_list(tids)
+            return repository.get_by_list(tids)
 
         result = repository.get(tid=tid, uid=uid, owner=owner)
         if len(result) == 0 and tid is not None:
