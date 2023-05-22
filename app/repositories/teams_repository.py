@@ -63,3 +63,12 @@ class TeamsRepository(DataBase):
         return self.find_by(
             self.COLLECTION_NAME, "tid", {"$in": tid_list}, output_model=Teams
         )
+
+    def get_by_list(self, tid_list):
+        result = self.find_by(
+            self.COLLECTION_NAME, "tid", {"$in": tid_list}, output_model=Teams
+        )
+        if len(result) > 0:
+            result.sort(key=lambda thing: tid_list.index(thing.tid))
+
+        return result
