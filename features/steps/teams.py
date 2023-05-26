@@ -59,6 +59,7 @@ def step_impl(context):
     team = context.response.json()
     assert team.get("created_date").split(":")[0] == local.strftime("%d-%m-%Y")
     assert team.get("updated_date").split(":")[0] == local.strftime("%d-%m-%Y")
+    assert team.get("state") == "ACTIVE"
 
 
 @when('completo el formulario de alta de equipo y no completo el "{field_name}"')
