@@ -4,6 +4,7 @@ from json import loads
 from typing import List, Optional
 from pydantic import BaseModel
 
+from app.models.team_states import TeamStates
 from app.models.technologies import Technologies
 
 
@@ -19,6 +20,7 @@ class Teams(BaseModel):
     technologies: Optional[Technologies]
     methodologies: Optional[List[str]]
     temporal: Optional[bool]
+    state: Optional[TeamStates]
 
     def to_json(self):
         return loads(self.json(exclude_defaults=True))
@@ -37,6 +39,7 @@ class Teams(BaseModel):
             "technologies": dict,
             "methodologies": list,
             "temporal": bool,
+            "state": str,
         }
 
     @staticmethod

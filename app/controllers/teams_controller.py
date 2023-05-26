@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from datetime import datetime
 from app.models.requests.team_update import TeamUpdate
+from app.models.team_states import TeamStates
 from app.models.teams import Teams
 
 
@@ -17,7 +18,7 @@ class TeamsController:
         team.created_date = local.strftime("%d-%m-%Y:%H:%M:%S")
         team.updated_date = local.strftime("%d-%m-%Y:%H:%M:%S")
         team.temporal = team.temporal if team.temporal else False
-
+        team.state = TeamStates.ACTIVE
         ok = repository.insert(team)
         if not ok:
             raise HTTPException(status_code=500, detail="Error saving")
