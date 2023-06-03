@@ -62,3 +62,9 @@ Feature: CRUD Team
     Then me retorna al equipo con nombre "DevArmy"
     And me retorna al equipo con nombre "DevArmy 2"
     And me retorna al equipo con nombre "Gonzalitos"
+
+
+  Scenario: Buscar equipo por creador
+    Given ya existe un equipo con nombre "DevArmy", tecnologias "Python, Django, React" y preferencia de proyectos de tipo "Web, AI, Crypto".
+    When pido las metricas
+    Then me retorna que se creo un equipo

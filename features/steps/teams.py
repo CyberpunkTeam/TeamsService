@@ -330,3 +330,23 @@ def step_impl(context):
     context.response = context.client.get(url)
 
     assert context.response.status_code == 200
+
+
+@when("pido las metricas")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    url = "/metrics"
+    context.response = context.client.get(url)
+
+    assert context.response.status_code == 200
+
+
+@then("me retorna que se creo un equipo")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    body = context.response.json()
+    assert len(body.get("teams_created", {})) == 1
