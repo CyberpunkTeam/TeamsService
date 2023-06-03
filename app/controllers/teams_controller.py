@@ -85,3 +85,15 @@ class TeamsController:
         result = repository.get(tid=tid)
         if len(result) == 0 and tid is not None:
             raise HTTPException(status_code=404, detail="Team not found")
+
+    @staticmethod
+    def get_metrics(repository):
+        teams = repository.get()
+        metrics = {}
+        for team in teams:
+            team_created_date = team.created_date[:10]
+            metrics[team_created_date] = metrics.get(team_created_date, 0) + 1
+
+        payload = {"teams_created": metrics}
+
+        return payload

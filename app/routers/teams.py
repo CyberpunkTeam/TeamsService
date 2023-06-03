@@ -60,3 +60,8 @@ async def update_user(tid: str, team: TeamUpdate):
 )
 async def create_team_member(tid: str, mid: str):
     return TeamsController.add_member(teams_repository, tid, mid)
+
+
+@router.get("/metrics", tags=["metrics"], status_code=200)
+async def get_metrics():
+    return TeamsController.get_metrics(teams_repository)
