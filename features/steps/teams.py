@@ -349,4 +349,8 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     body = context.response.json()
-    assert len(body.get("teams_created", {})) == 1
+
+    assert "teams_created" in body
+    assert "teams_state" in body
+
+    assert len(body.get("teams_created", {}).get("labels")) == 1
