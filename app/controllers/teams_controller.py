@@ -89,11 +89,24 @@ class TeamsController:
     @staticmethod
     def get_metrics(repository):
         teams = repository.get()
-        metrics = {}
+        created_metrics = {}
+        states_metrics = {}
         for team in teams:
             team_created_date = team.created_date[:10]
-            metrics[team_created_date] = metrics.get(team_created_date, 0) + 1
+            created_metrics[team_created_date] = (
+                created_metrics.get(team_created_date, 0) + 1
+            )
+            states_metrics[team.state] = states_metrics.get(team.state, 0) + 1
 
-        payload = {"teams_created": metrics}
+        payload = {
+            "teams_created": {
+                "labels": list(created_metrics.keys()),
+                "values": list(created_metrics.values()),
+            },
+            "teams_state": {
+                "labels": list(states_metrics.keys()),
+                "values": list(states_metrics.values()),
+            },
+        }
 
         return payload
